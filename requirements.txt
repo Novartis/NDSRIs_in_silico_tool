@@ -1,0 +1,5 @@
+rdkit-pypi
+streamlit
+streamlit-ketcher
+epam.indigo
+python-docx
