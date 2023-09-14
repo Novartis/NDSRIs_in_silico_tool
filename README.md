@@ -2,6 +2,9 @@
 
 We have developed a web-based application that can autonomously analyze the N-nitrosamine risk category of compounds from their SMILES notation, providing instant screening to identify high-risk formations of nitrosoamines, and the accuracy of the tool was validated using an FDA dataset of compounds with known nitrosoamine risks.
 
+# Example Application
+
+https://ndsris-cpca-in-silico-tool.streamlit.app/
 
 ## Installation
 
