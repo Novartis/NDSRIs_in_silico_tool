@@ -607,3 +607,18 @@ def combine_all_rules_together(input_smiles):
             return final_message, final_score
 
     return message,score
+ 
+def score_to_category(score):
+    if score == None or score == 100:
+        category = 5
+    elif score >= 4:
+        category = 4
+    elif score == 3:
+        # category = 'Potency Category 3 : AI = 400 ng/day'
+        category = 3
+    elif score == 2:
+        category = 2
+    elif score <= 1:
+        # category = 'Potency Category 1 : AI = 18 ng/day'
+        category = 1
+    return category
