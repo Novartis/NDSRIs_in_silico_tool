@@ -306,26 +306,25 @@ def identify_ewg_alpha(mol,N_index,single_carbon_index):
     ri = mol.GetRingInfo()
     de_score = 0
     for smile in com_ewg_group:
-        # print(smile)
         substructure = Chem.MolFromSmarts(smile)
         atom_indices = mol.GetSubstructMatches(substructure)
         if atom_indices:
             for atom_indice in atom_indices:
-                # print(atom_indice, N_index)
                 if N_index not in atom_indice and single_carbon_index in atom_indice:
                     for k, index in enumerate(atom_indice):
                         if single_carbon_index == index:
                             if smile in aromatic_smiles:
-                                last_atom = atom_indice[-1]
+                                if smile == '[#6]/[#6]([H])=[#6]([H])':
+                                    print(smile,atom_indice)
+                                    last_atom = atom_indice[-2]
+                                else:
+                                    last_atom = atom_indice[-1]
                                 last_atom = mol.GetAtomWithIdx(last_atom)
                                 for neighbor in last_atom.GetNeighbors():
+                                    print(neighbor.GetIsAromatic())
+                                    print(ri.AreAtomsInSameRing(single_carbon_index, neighbor.GetIdx()))
                                     if neighbor.GetSymbol() == 'C' and neighbor.GetIsAromatic() and not ri.AreAtomsInSameRing(single_carbon_index, neighbor.GetIdx()):
-                                        # print(smile)
                                         de_score = 1
-                                # carb_index = atom_indices[abs(len(smile)-k)-1]
-                                # carb_atom = mol.GetAtomWithIdx(carb_index)
-                                # if carb_atom.GetIsAromatic():
-                                #     de_score = 1
                             else:
                                 de_score = 1
     return de_score
