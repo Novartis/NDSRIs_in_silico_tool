@@ -247,6 +247,9 @@ def check_sublist(list1, list2):
 
 def five_consec_atoms(mol, N_index, carbon_index, chain):
     de_score = 0
+    ri_info = mol.GetRingInfo()
+    if ri_info.NumAtomRings(N_index) > 0 and ri_info.AtomRingSizes(N_index)[0] < 8:
+        return de_score
     result = find_chains(mol, N_index, chain)
     side_chain = []
     for list in result:
@@ -261,7 +264,6 @@ def five_consec_atoms(mol, N_index, carbon_index, chain):
             carbon_1.append(list)
         elif carbon_index[1] in list:
             carbon_2.append(list)
-    # print(carbon_1,carbon_2)
     if carbon_1 and carbon_2 and check_sublist(carbon_1,carbon_2):
         for ring in carbon_1:
             if not check_atoms_in_same_ring(mol,ring):
