@@ -19,6 +19,7 @@ from streamlit_ketcher import st_ketcher
 import io
 from indigo import *
 from CPCA_rules import combine_all_rules_together
+from CPCA_rules import score_to_category
 from template import create_word_file
 import pandas as pd
 
