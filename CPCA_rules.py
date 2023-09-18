@@ -315,14 +315,11 @@ def identify_ewg_alpha(mol,N_index,single_carbon_index):
                         if single_carbon_index == index:
                             if smile in aromatic_smiles:
                                 if smile == '[#6]/[#6]([H])=[#6]([H])':
-                                    print(smile,atom_indice)
                                     last_atom = atom_indice[-2]
                                 else:
                                     last_atom = atom_indice[-1]
                                 last_atom = mol.GetAtomWithIdx(last_atom)
                                 for neighbor in last_atom.GetNeighbors():
-                                    print(neighbor.GetIsAromatic())
-                                    print(ri.AreAtomsInSameRing(single_carbon_index, neighbor.GetIdx()))
                                     if neighbor.GetSymbol() == 'C' and neighbor.GetIsAromatic() and not ri.AreAtomsInSameRing(single_carbon_index, neighbor.GetIdx()):
                                         de_score = 1
                             else:
