@@ -431,6 +431,9 @@ def methyl_group(mol, single_carbon_index):
   alpha_C = mol.GetAtomWithIdx(single_carbon_index)
   for neighbor in alpha_C.GetNeighbors():
     if neighbor.GetSymbol() == 'C':
+      beta_h = sum(1 for sub_neigh in neighbor.GetNeighbors() if sub_neigh.GetAtomicNum() == 1)
+      if beta_h == 2:
+        return False
         # Get the number of hydrogen atoms connected to the atom
       for sub_neighbor in neighbor.GetNeighbors():
           if sub_neighbor.GetSymbol() == 'C':
