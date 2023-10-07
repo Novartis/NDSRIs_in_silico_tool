@@ -432,10 +432,10 @@ def methyl_group(mol, single_carbon_index):
   for neighbor in alpha_C.GetNeighbors():
     if neighbor.GetSymbol() == 'C':
       beta_h = sum(1 for sub_neigh in neighbor.GetNeighbors() if sub_neigh.GetAtomicNum() == 1)
-      if beta_h == 2:
-        return False
+     # This rule only applies when there is one hydrogen on beta-carbon
+      if beta_h == 1:
         # Get the number of hydrogen atoms connected to the atom
-      for sub_neighbor in neighbor.GetNeighbors():
+       for sub_neighbor in neighbor.GetNeighbors():
           if sub_neighbor.GetSymbol() == 'C':
               num_h = sum(1 for neighbor in sub_neighbor.GetNeighbors() if neighbor.GetAtomicNum() == 1)
         # Check if the number of hydrogen atoms is 3
