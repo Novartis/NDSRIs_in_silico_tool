@@ -115,16 +115,19 @@ def tertiary_carbon(mol,list):
 
 # Find caboxylic_acid group in the molecule
 def caboxylic_acid(mol):
-    carboxylic_acid = Chem.MolFromSmarts('C(=O)O')
+    acid = None
+    carboxylic_acid = Chem.MolFromSmarts('C(=O)O[H]')
     match_pattern = mol.GetSubstructMatch(carboxylic_acid)
+    print(match_pattern)
     if mol.HasSubstructMatch(carboxylic_acid):
         single_oxygen = mol.GetAtomWithIdx(match_pattern[2])
+        print(single_oxygen.GetSymbol())
         for neighbor in single_oxygen.GetNeighbors():
+            print(neighbor.GetSymbol())
             if neighbor.GetSymbol() == 'H':
-                return True
-        return False
-    else:
-        return False
+                acid = True
+        # return False
+    return acid
 
 # pyrrolidine ring is found or not
 def is_in_pyrrolidine(mol,N_index):
