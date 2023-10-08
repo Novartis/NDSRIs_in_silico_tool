@@ -505,6 +505,8 @@ def combine_all_rules_together(input_smiles):
                 for i in alpha_Hydrogen_Score.keys():
                     # print(str(sorted(hydrogen_pattern)),i)
                     if str(sorted(hydrogen_pattern)) == i:
+                        score = alpha_Hydrogen_Score[i]
+                        result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
                         if i == '[0, 2]':
                             for carbon_idx in alpha_carbon:
                                 carbon = mol.GetAtomWithIdx(carbon_idx)
@@ -515,12 +517,6 @@ def combine_all_rules_together(input_smiles):
                                             if sum(1 for sub_h in sub_carb.GetNeighbors() if sub_h.GetAtomicNum() == 1) == 3:
                                                 score = 2
                                                 result = f"Count of hydrogen atoms on each α-carbon {i} and the methylene α-carbon is part of an ethyl group and corresponding α-Hydrogen Score is {score}"
-                                            else:
-                                                score = alpha_Hydrogen_Score[i]
-                                                result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
-                        else:
-                            score = alpha_Hydrogen_Score[i]
-                            result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
                         message.append(result)
                 # Deactivating feature
                 if caboxylic_acid(mol):
@@ -587,23 +583,19 @@ def combine_all_rules_together(input_smiles):
                         for i in alpha_Hydrogen_Score.keys():
                             # print(str(sorted(hydrogen_pattern)),i)
                             if str(sorted(hydrogen_pattern)) == i:
-                                if i == '[0, 2]':
-                                    for carbon_idx in alpha_carbon:
-                                        carbon = mol.GetAtomWithIdx(carbon_idx)
-                                        carbon_h = sum(1 for neighbor in carbon.GetNeighbors() if neighbor.GetAtomicNum() == 1)
-                                        if carbon_h == 2:
-                                            for sub_carb in carbon.GetNeighbors():
-                                                if sub_carb.GetSymbol() == 'C':
-                                                    if sum(1 for sub_h in sub_carb.GetNeighbors() if sub_h.GetAtomicNum() == 1) == 3:
-                                                        score = 2
-                                                        result = f"Count of hydrogen atoms on each α-carbon {i} and the methylene α-carbon is part of an ethyl group and corresponding α-Hydrogen Score is {score}"
-                                                    else:
-                                                        score = alpha_Hydrogen_Score[i]
-                                                        result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
-                                else:
-                                    score = alpha_Hydrogen_Score[i]
-                                    result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
-                                message.append(result)
+                             score = alpha_Hydrogen_Score[i]
+                             result = f"Count of hydrogen atoms on each α-carbon {i} and corresponding α-Hydrogen Score is {score}"
+                             if i == '[0, 2]':
+                                 for carbon_idx in alpha_carbon:
+                                    carbon = mol.GetAtomWithIdx(carbon_idx)
+                                    carbon_h = sum(1 for neighbor in carbon.GetNeighbors() if neighbor.GetAtomicNum() == 1)
+                                    if carbon_h == 2:
+                                        for sub_carb in carbon.GetNeighbors():
+                                            if sub_carb.GetSymbol() == 'C':
+                                                if sum(1 for sub_h in sub_carb.GetNeighbors() if sub_h.GetAtomicNum() == 1) == 3:
+                                                    score = 2
+                                                    result = f"Count of hydrogen atoms on each α-carbon {i} and the methylene α-carbon is part of an ethyl group and corresponding α-Hydrogen Score is {score}"
+                             message.append(result)
                 # Deactivating feature
                         if caboxylic_acid(mol):
                             score += 3
