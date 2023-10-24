@@ -20,6 +20,7 @@ import base64
 
 #check if there is N-nitroamine pattern in the molecule, if yes return with every pair of N index and alpha carbons' index
 def is_nitro_pattern(mol):
+    double_bonded_to_heteroatom = False
     key_list = []
     nitro_pattern_smile = 'N(N=O)'
     nitro_pattern = Chem.MolFromSmarts(nitro_pattern_smile)
@@ -35,6 +36,13 @@ def is_nitro_pattern(mol):
                     for neighbor in neighbors:
                         if neighbor.GetSymbol() == 'C':
                             carbon_idx.append(neighbor.GetIdx())
+                            for sub_neighbor in neighbor.GetNeighbors():
+                                if sub_neighbor.GetSymbol() != 'H' and sub_neighbor.GetSymbol() != 'C':
+                                    bond = mol.GetBondBetweenAtoms(sub_neighbor.GetIdx(), neighbor.GetIdx())
+                                    if bond.GetBondType() == Chem.rdchem.BondType.DOUBLE:
+                                        double_bonded_to_heteroatom = True
+                    if double_bonded_to_heteroatom:
+                       return None
                     key_list.append([match[0],carbon_idx])
     return key_list
 
