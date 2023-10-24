@@ -71,11 +71,13 @@ with tab1:
                         category = 'Potency Category 1 : AI = 18 ng/day'
                     for message in messages:
                         st.write(message)
-                    st.write(f'Score: {score}')
-                    st.write(category)
+                    if 'No nitrosamine pattern is found in the molecule' not in messages:
+                        st.write(f'Score: {score}')
+                        st.write(category)
             Draw.MolToFile(mol, 'mol.png',size=(600, 600))
-            bio = create_word_file('mol.png', 'flowchart.png',messages,score)
-            st.markdown(get_download_link(bio.getvalue(), 'Report.docx'), unsafe_allow_html=True)
+            if 'No nitrosamine pattern is found in the molecule' not in messages:
+                bio = create_word_file('mol.png', 'flowchart.png',messages,score)
+                st.markdown(get_download_link(bio.getvalue(), 'Report.docx'), unsafe_allow_html=True)
 
     with col3:
         st.write('This is flowchart on assigning potency category')
