@@ -41,9 +41,9 @@ def is_nitro_pattern(mol):
                                     bond = mol.GetBondBetweenAtoms(sub_neighbor.GetIdx(), neighbor.GetIdx())
                                     if bond.GetBondType() == Chem.rdchem.BondType.DOUBLE:
                                         double_bonded_to_heteroatom = True
+                    key_list.append([match[0],carbon_idx])                 
                     if double_bonded_to_heteroatom:
-                       return None
-                    key_list.append([match[0],carbon_idx])
+                       key_list.remove([match[0],carbon_idx])
     return key_list
 
 
