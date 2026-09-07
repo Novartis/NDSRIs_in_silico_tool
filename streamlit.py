@@ -82,7 +82,7 @@ with tab1:
     with col3:
         st.write('This is flowchart on assigning potency category')
 
-        st.image("flowchart.png", caption='Flow Chart', use_column_width=True)
+        st.image("flowchart.png", caption='Flow Chart', use_container_width=True)
 with tab2:
     # Add example file download link
     example_file_path = "example.csv"
